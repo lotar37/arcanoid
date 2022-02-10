@@ -1,20 +1,34 @@
 from tkinter import *
 
-def str_to_sort_list(event):
-    s = ent.get()
-    s = s.split()
-    s.sort()
-    lab['text'] = ' '.join(s)
+
+class Block:
+    def __init__(self, master, func):
+        self.ent = Entry(master, width=20)
+        self.but = Button(master,
+                          text="Преобразовать")
+        self.lab = Label(master, width=20,
+                         bg='black', fg='white')
+        self.but['command'] = getattr(self, func)
+        self.ent.pack()
+        self.but.pack()
+        self.lab.pack()
+
+    def str_to_sort(self):
+        s = self.ent.get()
+        s = s.split()
+        s.sort()
+        self.lab['text'] = ' '.join(s)
+
+    def str_reverse(self):
+        s = self.ent.get()
+        s = s.split()
+        s.reverse()
+        self.lab['text'] = ' '.join(s)
+
 
 root = Tk()
-ent = Entry(root, width=20)
-but = Button(root, text="Преобразовать")
-lab = Label(root, width=20,
-            bg='black', fg='white')
 
+first_block = Block(root, 'str_to_sort')
+second_block = Block(root, 'str_reverse')
 
-but.bind('<Button-1>', str_to_sort_list)
-ent.pack()
-but.pack()
-lab.pack()
 root.mainloop()
