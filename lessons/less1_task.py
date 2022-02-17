@@ -3,13 +3,13 @@ from tkinter import *
 
 class Calc:
     def __init__(self, master):
-        self.ent1 = Entry(master, width=20)
-        self.ent2 = Entry(master, width=20)
-        self.plus = Button(master, text="+")
+        self.ent1  = Entry(master, width=20)
+        self.ent2  = Entry(master, width=20)
+        self.plus  = Button(master, text="+")
         self.minus = Button(master, text="-")
-        self.mult = Button(master, text="*")
-        self.dev = Button(master, text="/")
-        self.lab = Label(master, width=20,
+        self.mult  = Button(master, text="*")
+        self.dev   = Button(master, text="/")
+        self.lab   = Label(master, width=20,
                          bg='black', fg='white')
 
         self.plus['command'] = self.fun_plus
