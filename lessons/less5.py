@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'designeroMSkln.ui'
+## Form generated from reading UI file 'designergYvoZX.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.14.1
 ##
@@ -16,43 +16,33 @@ from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
 from PySide2.QtWidgets import *
 
 
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        if Dialog.objectName():
-            Dialog.setObjectName(u"Dialog")
-        Dialog.resize(400, 300)
-        self.buttonBox = QDialogButtonBox(Dialog)
-        self.buttonBox.setObjectName(u"buttonBox")
-        self.buttonBox.setGeometry(QRect(30, 240, 341, 32))
-        self.buttonBox.setOrientation(Qt.Horizontal)
-        self.buttonBox.setStandardButtons(QDialogButtonBox.Cancel|QDialogButtonBox.Ok)
-        self.widget = QWidget(Dialog)
-        self.widget.setObjectName(u"widget")
-        self.widget.setGeometry(QRect(60, 120, 158, 25))
-        self.gridLayout = QGridLayout(self.widget)
-        self.gridLayout.setObjectName(u"gridLayout")
-        self.gridLayout.setContentsMargins(0, 0, 0, 0)
-        self.pushButton = QPushButton(self.widget)
+class Ui_MainWindow(object):
+    def setupUi(self, MainWindow):
+        if MainWindow.objectName():
+            MainWindow.setObjectName(u"MainWindow")
+        MainWindow.resize(394, 535)
+        self.centralwidget = QWidget(MainWindow)
+        self.centralwidget.setObjectName(u"centralwidget")
+        self.verticalLayout = QVBoxLayout(self.centralwidget)
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.listWidget = QListWidget(self.centralwidget)
+        self.listWidget.setObjectName(u"listWidget")
+
+        self.verticalLayout.addWidget(self.listWidget)
+
+        self.pushButton = QPushButton(self.centralwidget)
         self.pushButton.setObjectName(u"pushButton")
 
-        self.gridLayout.addWidget(self.pushButton, 0, 0, 1, 1)
+        self.verticalLayout.addWidget(self.pushButton)
 
-        self.pushButton_2 = QPushButton(self.widget)
-        self.pushButton_2.setObjectName(u"pushButton_2")
+        MainWindow.setCentralWidget(self.centralwidget)
 
-        self.gridLayout.addWidget(self.pushButton_2, 0, 1, 1, 1)
+        self.retranslateUi(MainWindow)
 
-
-        self.retranslateUi(Dialog)
-        self.buttonBox.accepted.connect(Dialog.accept)
-        self.buttonBox.rejected.connect(Dialog.reject)
-
-        QMetaObject.connectSlotsByName(Dialog)
+        QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
 
-    def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Dialog", None))
-        self.pushButton.setText(QCoreApplication.translate("Dialog", u"PushButton", None))
-        self.pushButton_2.setText(QCoreApplication.translate("Dialog", u"PushButton", None))
+    def retranslateUi(self, MainWindow):
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
+        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"\u0432\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u043f\u0430\u043f\u043a\u0443", None))
     # retranslateUi
-root = Ui_Dialog()
