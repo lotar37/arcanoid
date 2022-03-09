@@ -21,9 +21,9 @@ class Block:
 
     def str_reverse(self):
         s = self.ent.get()
-        s = s.split()
-        s.reverse()
-        self.lab['text'] = ' '.join(s)
+        s = s[::-1]
+        # s.reverse()
+        self.lab['text'] = s
 
 
 root = Tk()
