@@ -12,15 +12,15 @@ class Ball:
         self.x = x
         self.y = y
         self.angle = angle
-        self.step = 10
+        self.step = 30
+        self.Vx = self.step * cos(radians(self.angle))
+        self.Vy = self.step * sin(radians(self.angle))
 # движение шарика
     def move(self):
-        self.x += self.step * cos(radians(self.angle))
-        self.y += self.step * sin(radians(self.angle))
+        self.x += self.Vx
+        self.y += self.Vy
         print(self.x,"-",self.y)
-        wall = self.check_wall()
-        if wall:
-            self.change_angle(wall)
+        self.check_wall()
 # изменение угла при достижении препятствия
 # типы препятствий: top, right, bottom, left
     def change_angle(self,type):
@@ -30,19 +30,20 @@ class Ball:
     def check_wall(self):
         if self.x < 0:
             self.x = 0
-            return "left"
+            self.Vx = -self.Vx
         if self.x > max_x:
             self.x = max_x
-            return "right"
+            self.Vx = -self.Vx
         if self.y < 0:
             self.y = 0
-            return "top"
-        if self.x > max_y:
-            self.x = max_y
-            return "bottom"
-        return False
+            self.Vy = -self.Vy
+        if self.y > max_y:
+            self.y = max_y
+            self.Vy = -self.Vy
+
+
 b = Ball(5,5,30)
-for i in range(3):
+for i in range(30):
     b.move()
     sleep(0.1)
 
