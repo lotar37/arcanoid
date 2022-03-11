@@ -8,24 +8,24 @@ max_y = 360
 
 
 class Ball:
-    def __init__(self,x,y,angle):
+    def __init__(self,x,y,angle,color):
         self.x = x
         self.y = y
         self.angle = angle
+        self.color = color
+        self.radius = 5
         self.step = 30
         self.Vx = self.step * cos(radians(self.angle))
         self.Vy = self.step * sin(radians(self.angle))
+        self.avatar = canvas.create_oval(self.x, self.y, self.x + 2*self.radius, self.y + 2*self.radius, fill=self.color)
 # движение шарика
     def move(self):
         self.x += self.Vx
         self.y += self.Vy
         print(self.x,"-",self.y)
         self.check_wall()
-# изменение угла при достижении препятствия
-# типы препятствий: top, right, bottom, left
-    def change_angle(self,type):
-        if type == "left":
-            pass
+        canvas.coords(self.avatar, self.x, self.y, self.x + 2*self.radius, self.y + 2*self.radius)
+        canvas.after(200,self.move)
 # проверка наличия стены
     def check_wall(self):
         if self.x < 0:
@@ -42,21 +42,18 @@ class Ball:
             self.Vy = -self.Vy
 
 
-b = Ball(5,5,30)
-for i in range(30):
-    b.move()
-    sleep(0.1)
-
-
-
-
-
 
 def init_main_window():
     global root, canvas, scores_text, scores_value
     root = tkinter.Tk()
     root.title("BALL")
     canvas = tkinter.Canvas(root, width=max_x, height=max_y, bg="white")
+    canvas.pack()
+    b = []
+    for i in range(5):
+        b.append(Ball(randint(0,max_x), randint(0,max_y), randint(0,359),"red"))
+    for i in range(len(b)):
+        canvas.after(20,b[i].move)
     # canvas.bind("<Button-1>",click_event_handler)
 print(__name__)
 
