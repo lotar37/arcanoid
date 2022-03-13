@@ -1,10 +1,11 @@
 from math import sin, cos, radians, degrees
-from time import sleep
 import tkinter
 from random import choice, randint
 
 max_x = 480
 max_y = 360
+ball_available_colors = ["green", "blue", "red", "yellow", "magenta", "black", "green",
+                         "cyan", "pink", "orange", "gray", "lightgray", "darkred", "lightgreen", "darkorange"]
 
 
 class Ball:
@@ -51,7 +52,7 @@ def init_main_window():
     canvas.pack()
     b = []
     for i in range(5):
-        b.append(Ball(randint(0,max_x), randint(0,max_y), randint(0,359),"red"))
+        b.append(Ball(randint(0,max_x), randint(0,max_y), randint(0,359),choice(ball_available_colors)))
     for i in range(len(b)):
         canvas.after(20,b[i].move)
     # canvas.bind("<Button-1>",click_event_handler)
