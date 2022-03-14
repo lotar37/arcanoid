@@ -5,7 +5,7 @@ from random import choice, randint
 
 max_x = 480
 max_y = 360
-
+# experiment
 class Pen:
     def __init__(self,x,y):
         self.x = x
