@@ -1,6 +1,5 @@
 from tkinter import *
 
-
 class Block:
     def __init__(self, master, func):
         self.ent = Entry(master, width=20)
@@ -24,7 +23,6 @@ class Block:
         s = s[::-1]
         # s.reverse()
         self.lab['text'] = s
-
 
 root = Tk()
 

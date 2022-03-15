@@ -43,5 +43,3 @@ b = Ball(5,5,30)
 for i in range(30):
     b.move()
     sleep(0.1)
-
-
