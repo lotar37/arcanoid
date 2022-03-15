@@ -1,5 +1,6 @@
 import pygame
 import sys
+import pygame_template
 from pygame.locals import *
 
 pygame.init()
