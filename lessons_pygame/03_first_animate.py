@@ -3,9 +3,10 @@ import sys
 
 FPS = 60
 WIN_WIDTH = 400
-WIN_HEIGHT = 100
+WIN_HEIGHT = 400
 WHITE = (255, 255, 255)
 ORANGE = (255, 150, 100)
+GREEN = (100, 255, 100)
 
 clock = pygame.time.Clock()
 sc = pygame.display.set_mode(
@@ -19,6 +20,9 @@ x = 0 - r
 # выравнивание по центру по вертикали
 y = WIN_HEIGHT // 2
 
+xR = 40
+yR = 40
+stepR = 5
 while 1:
     for i in pygame.event.get():
         if i.type == pygame.QUIT:
@@ -29,6 +33,7 @@ while 1:
     # рисуем круг
     pygame.draw.circle(sc, ORANGE,
                        (x, y), r)
+    pygame.draw.rect(sc, GREEN, (xR, yR, r, r))
     # обновляем окно
     pygame.display.update()
 
@@ -41,5 +46,8 @@ while 1:
         # на следующей итерации цикла
         # круг отобразится немного правее
         x += 2
+    if xR + r >= WIN_WIDTH or xR <= 0:
+        stepR = -stepR
+    xR += stepR
 
     clock.tick(FPS)
