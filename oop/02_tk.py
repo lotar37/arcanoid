@@ -18,12 +18,12 @@ class Ball:
         self.step = 30
         self.Vx = self.step * cos(radians(self.angle))
         self.Vy = self.step * sin(radians(self.angle))
-        self.avatar = canvas.create_oval(self.x, self.y, self.x + 2*self.radius, self.y + 2*self.radius, fill=self.color)
+        self.avatar = canvas.create_oval(self.x, self.y, \
+            self.x + 2*self.radius, self.y + 2*self.radius, fill=self.color)
 # движение шарика
     def move(self):
         self.x += self.Vx
         self.y += self.Vy
-        print(self.x,"-",self.y)
         self.check_wall()
         canvas.coords(self.avatar, self.x, self.y, self.x + 2*self.radius, self.y + 2*self.radius)
         canvas.after(200,self.move)
@@ -51,7 +51,7 @@ def init_main_window():
     canvas = tkinter.Canvas(root, width=max_x, height=max_y, bg="white")
     canvas.pack()
     b = []
-    for i in range(5):
+    for i in range(10):
         b.append(Ball(randint(0,max_x), randint(0,max_y), randint(0,359),choice(ball_available_colors)))
     for i in range(len(b)):
         canvas.after(20,b[i].move)
