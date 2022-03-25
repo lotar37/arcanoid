@@ -33,7 +33,9 @@ class wolf:
         if question == "Как тебя зовут?":
             print("Меня зовут ", self.name)
         elif question == "Вес?":
-                print("Я вешу ", self.weight , " килограмм")
+            print("Я вешу ", self.weight, " килограмм")
+        elif question == "Где?":
+            print("Я в точке ", self.point)
         else:
             print("Не понял вопрос")
 
