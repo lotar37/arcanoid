@@ -33,6 +33,7 @@ while 1:
     # рисуем круг
     pygame.draw.circle(sc, ORANGE,
                        (x, y), r)
+    # рисуем квадарат
     pygame.draw.rect(sc, GREEN, (xR, yR, r, r))
     # обновляем окно
     pygame.display.update()
