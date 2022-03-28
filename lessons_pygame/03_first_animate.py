@@ -1,12 +1,14 @@
 import pygame
 import sys
+import polygon
 
 FPS = 60
-WIN_WIDTH = 400
-WIN_HEIGHT = 400
+WIN_WIDTH = 800
+WIN_HEIGHT = 800
 WHITE = (255, 255, 255)
 ORANGE = (255, 150, 100)
 GREEN = (100, 255, 100)
+
 
 clock = pygame.time.Clock()
 sc = pygame.display.set_mode(
@@ -23,6 +25,8 @@ y = WIN_HEIGHT // 2
 xR = 40
 yR = 40
 stepR = 5
+
+p = polygons(x, y, r, GREEN, sc)
 while 1:
     for i in pygame.event.get():
         if i.type == pygame.QUIT:
@@ -34,7 +38,8 @@ while 1:
     pygame.draw.circle(sc, ORANGE,
                        (x, y), r)
     # рисуем квадарат
-    pygame.draw.rect(sc, GREEN, (xR, yR, r, r))
+    p.draw()
+    # pygame.draw.rect(sc, GREEN, (xR, yR, r, r))
     # обновляем окно
     pygame.display.update()
 
