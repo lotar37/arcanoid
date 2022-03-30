@@ -12,22 +12,25 @@ class wolf:
         self.point = p
 
     def sleep(self):
-        print("zzzzzzz")
+        # print("zzzzzzz")
+        pass
 
     def run(self):
         if self.weight > 0:
-            print("gogogo")
             self.weight -= 1
-            self.life()
+            self.eat()
+            self.sleep()
         else:
             self.status = "die"
+            print("волк", self.name, "прекратил игру (((")
 
     def eat(self):
         if self.food > 0:
             self.food -= 1
             self.weight +=1
 
-
+    def info(self):
+        return self.name + " | " + str(self.weight)+ " | " + str(self.point)
 
     def talk(self, question):
         if question == "Как тебя зовут?":
