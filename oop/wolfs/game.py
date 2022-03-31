@@ -61,7 +61,7 @@ class game:
                 wolf.point = randint(0,self.size_game_zone-1)
                 # если в точке есть еда - съедаем
                 if self.game_zone[wolf.point] > 0:
-                    print(wolf.name,"cъел", self.game_zone[wolf.point], "кг")
+                    print(wolf.name,"получает", self.game_zone[wolf.point], "кг еды")
                     wolf.food += self.game_zone[wolf.point]
                     self.game_zone[wolf.point] = 0
                 # побегать по местности, поесть(если есть еда), поспать
