@@ -9,8 +9,7 @@ class player:
         return randint(1,6)
 
 
-
-class team:
+class Team:
     players = []
     name = ""
     points = 0
@@ -27,19 +26,16 @@ class team:
         return summa
 
 
+class Game:
 
-
-
-
-class game:
     game_limit = 101
     teams = []
     game_on = True
 
     # n команд по  k игроков
     def __init__(self, n, k):
-        for i in range(1,n+1):
-            self.teams.append(team(k,"team_"+str(i)))
+        for i in range(1, n+1):
+            self.teams.append(Team(k, "team_"+str(i)))
 
     def check_points(self):
         for t in self.teams:
@@ -52,7 +48,6 @@ class game:
         print("oчки", end=":")
         for t in self.teams:
             print(t.points, end=", ")
-
 
     # в этом методе класса game команды набирают очки
     # Со всех команд собираются числа через метод team_pass класса team
@@ -80,7 +75,7 @@ class game:
             self.check_points()
 
 
-g = game(4,3)
+g = Game(4, 3)
 g.play()
 
 
