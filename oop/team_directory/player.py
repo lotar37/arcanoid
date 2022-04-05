@@ -1,4 +1,5 @@
 from random import randint
+
 class Player:
 
     def __init__(self, name):
@@ -45,10 +46,13 @@ class Game:
     # переменная game_on равна True если игра продолжается, и
     # False если выполнено условие окончания игры(какая-то из команд выигрыла)
     game_on = True
+    # тип игры
+    type = "четность"
 
     # n команд по  k игроков
-    def __init__(self, n, k):
+    def __init__(self, n, k, type="четность"):
         self.teams = []
+        self.type = type
         for i in range(1, n+1):
             self.teams.append(Team(k, "team_"+str(i)))
 
@@ -86,26 +90,28 @@ class Game:
         while self.game_on:
             tour += 1
             print("---===== ТУР №" + str(tour) + " =======---")
-            # пустой список, для сбора с команд информаци о ходе
-            a = []
+            # a_team_pass - пустой список, для сбора с команд информаци о новом ходе
+            a_team_pass = []
+            # заполнение списка a_team_pass
             for t in self.teams:
-                a.append(t.team_pass())
-            print("ход команд:",a)
+                a_team_pass.append(t.team_pass())
+            # выводим список с ходами команд
+            print("ход команд:",a_team_pass)
             # анализируем ходы команд на четность:
             # если число четное вместо него пишем 1
             # если нечетное - 0
-            for i in range(len(a)):
-                if a[i] % 2 == 0:
-                    a[i] = 1
+            for i in range(len(a_team_pass)):
+                if a_team_pass[i] % 2 == 0:
+                    a_team_pass[i] = 1
                 else:
-                    a[i] = 0
+                    a_team_pass[i] = 0
             # количество очков, которые получат победившие команды
             # равно количеству проигравших команд. Чем меньше выигравших
             # команд, тем большее количество очков они получат.
             # len - метод возвращающий длину списка  sum - суммирует единицы в списке
-            bonus = len(self.teams) - sum(a)
-            for i in range(len(a)):
-                if a[i] == 1:
+            bonus = len(self.teams) - sum(a_team_pass)
+            for i in range(len(a_team_pass)):
+                if a_team_pass[i] == 1:
                     self.teams[i].points += bonus
                     print("команда", self.teams[i].team_name, "получает", bonus)
             # вывести очки, набранные командами
