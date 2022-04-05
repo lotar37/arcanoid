@@ -8,7 +8,6 @@ maximum = 0
 i = 0
 for simbol in str:
     i +=1
-    # print(simbol)
     if pred != simbol:
     # if simbol == "X":
         c += 1
@@ -18,8 +17,6 @@ for simbol in str:
         if c > maximum:
             maximum = c
         c = 0
-            # print(s)
-            # print(i)
         s = ""
 print(maximum)
 
