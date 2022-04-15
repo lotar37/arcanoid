@@ -30,7 +30,16 @@ class Team:
         summa = 0
         for pl in self.players:
             summa += pl.roll_the_dice()
-        return summa
+        if summa % 2 == 0:
+            return 1
+        else:
+            return 0
+    # ход команды = сумма ходов игроков
+    def team_pass1(self):
+        for pl in self.players:
+            if pl.roll_the_dice() < 3:
+                return 0
+        return 1
     # вывод на экран состава команды
     def team_list(self):
         print("состав команды", self.team_name)
@@ -94,17 +103,9 @@ class Game:
             a_team_pass = []
             # заполнение списка a_team_pass
             for t in self.teams:
-                a_team_pass.append(t.team_pass())
+                a_team_pass.append(t.team_pass1())
             # выводим список с ходами команд
             print("ход команд:",a_team_pass)
-            # анализируем ходы команд на четность:
-            # если число четное вместо него пишем 1
-            # если нечетное - 0
-            for i in range(len(a_team_pass)):
-                if a_team_pass[i] % 2 == 0:
-                    a_team_pass[i] = 1
-                else:
-                    a_team_pass[i] = 0
             # количество очков, которые получат победившие команды
             # равно количеству проигравших команд. Чем меньше выигравших
             # команд, тем большее количество очков они получат.
