@@ -9,6 +9,8 @@ ball_available_colors = ["green", "blue", "red", "yellow", "magenta", "black", "
                          "cyan", "pink", "orange", "gray", "lightgray", "darkred", "lightgreen", "darkorange"]
 
 
+
+
 class Ball:
     def __init__(self,x,y,angle,color,num):
         self.num = num
