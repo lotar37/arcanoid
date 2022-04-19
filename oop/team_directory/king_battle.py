@@ -1,5 +1,6 @@
 from tkinter import *
 from random import randint, choice
+from PIL import Image, ImageTk
 from time import sleep
 from threading import Thread
 direct = ["n","o","s","w","n","o","s","w"]
@@ -30,7 +31,7 @@ class Player:
         self.color = ball_available_colors[self.id]
         self.status = "alive"
         self.hp = 100
-        self.mashtab = 50
+        self.mashtab = 60
         self.x = 0
         self.y = 0
         print(canvas)
@@ -55,7 +56,7 @@ class Player:
         for i in range(discret):
             x, y = pos[0] + step[0] * (i+1),  pos[1] + step[1] * (i+1)
             canvas.coords(self.avatar, x - self.radius, y - self.radius, x + self.radius, y + self.radius)
-            # sleep(0.000001)
+            # sleep(0.01)
             root.update_idletasks()
             root.update()
 
@@ -92,7 +93,7 @@ class Game:
     global move_types, root, canvas
     x = 15
     y = 15
-    trees = 15
+    trees = 25
     playing_fild = []
     mashtab = 40
 
@@ -111,7 +112,7 @@ class Game:
                 y = randint(0, Game.y-1)
                 if Game.playing_field[y][x] == "":
                     Game.playing_field[y][x] = "tree"
-                    self.set_tree( x, y)
+                    self.set_tree_img( x, y)
                     break
         for i in range(len(self.players)):
             while True:
@@ -128,6 +129,13 @@ class Game:
         delta = Game.mashtab // 2
         canvas.create_oval(x* Game.mashtab - delta, y* Game.mashtab - delta, x* Game.mashtab + delta,\
                            y* Game.mashtab + delta, fill="green")
+    def set_tree_img(self, x, y):
+        minc = Image.open("../../images/tree.gif")
+        mincol = ImageTk.PhotoImage(minc)
+        label3 = Label(canvas, image=mincol, border=0)
+        label3.image = mincol
+        label3.place(x=x*Game.mashtab - 20, y=y*Game.mashtab - 20, )
+
 
     def players_move(self):
         moves = []
