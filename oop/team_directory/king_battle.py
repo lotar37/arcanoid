@@ -5,7 +5,12 @@ from threading import Thread
 direct = ["n","o","s","w","n","o","s","w"]
 move_types = ["step"]
 ball_available_colors = ["green", "blue", "red", "yellow", "magenta",
-                         "cyan", "pink", "orange", "gray", "lightgray", "darkred", "lightgreen", "darkorange"]
+                         "cyan", "pink", "orange", "gray", "lightgray", "darkred", "lightgreen", "darkorange",
+                         "green", "blue", "red", "yellow", "magenta",
+                         "cyan", "pink", "orange", "gray", "lightgray", "darkred", "lightgreen", "darkorange",
+                         "green", "blue", "red", "yellow", "magenta",
+                         "cyan", "pink", "orange", "gray", "lightgray", "darkred", "lightgreen", "darkorange",
+                         ]
 
 max_x = 800
 max_y = 800
@@ -38,21 +43,19 @@ class Player:
             return {"id":self.id, "type":"step","data":self.step()}
 
     def set_avatar(self):
-        canvas.coords(self.avatar, self.x * self.mashtab - self.radius, self.y * self.mashtab - self.radius, \
-                      self.x * self.mashtab  + self.radius, self.y * self.mashtab + self.radius)
-
-
+        canvas.coords(self.avatar, self.x * Game.mashtab - self.radius, self.y * Game.mashtab - self.radius, \
+                      self.x * Game.mashtab  + self.radius, self.y * Game.mashtab + self.radius)
 
     def move_avatar(self):
         pos = canvas.coords(self.avatar)
         discret = 10
-        step = [-(pos[0] - self.x * self.mashtab)//discret, -(pos[1] - self.y * self.mashtab)//discret]
+        step = [-(pos[0] - self.x * Game.mashtab)//discret, -(pos[1] - self.y * Game.mashtab)//discret]
         print("position:",pos,step)
         print('to', self.x, self.y)
         for i in range(discret):
             x, y = pos[0] + step[0] * (i+1),  pos[1] + step[1] * (i+1)
             canvas.coords(self.avatar, x - self.radius, y - self.radius, x + self.radius, y + self.radius)
-            sleep(0.001)
+            # sleep(0.000001)
             root.update_idletasks()
             root.update()
 
@@ -91,7 +94,7 @@ class Game:
     y = 15
     trees = 15
     playing_fild = []
-    mashtab = 50
+    mashtab = 40
 
     def __init__(self, n):
         self.game_on = True
@@ -148,7 +151,7 @@ class Game:
         i = 0
         while self.game_on:
             i += 1
-            if i > 1115:
+            if i > 11150:
                 break
             moves = self.players_move()
             print(moves)
@@ -156,9 +159,9 @@ class Game:
             print(Game.playing_field)
             root.update_idletasks()
             root.update()
-            sleep(1)
+            # sleep(1)
 
 
-g = Game(10)
+g = Game(30)
 print(g.playing_field)
 g.play()
