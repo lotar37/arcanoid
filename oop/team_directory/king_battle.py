@@ -4,7 +4,7 @@ from PIL import Image, ImageTk
 from time import sleep
 from threading import Thread
 direct = ["n","o","s","w","n","o","s","w"]
-move_types = ["step"]
+move_types = ["shot","step"]
 ball_available_colors = ["green", "blue", "red", "yellow", "magenta",
                          "cyan", "pink", "orange", "gray", "lightgray", "darkred", "lightgreen", "darkorange",
                          "green", "blue", "red", "yellow", "magenta",
@@ -102,7 +102,7 @@ class Game:
         self.players = [Player(i) for i in range(n)]
         Game.playing_field = [["" for i in range(Game.y)] for j in range(Game.x)]
         self.arrangement()
-        self.proc = {"step":self.player_step}
+        self.proc = {"step":self.player_step, "shot":self.player_shot}
 
 # начальная расстановка объектов и игроков
     def arrangement(self):
@@ -145,6 +145,9 @@ class Game:
 
     def player_step(self,move):
         self.players[move["id"]].step_exe(move)
+
+    def player_shot(self):
+        pass
 
     def game_calculate(self, moves):
         # эта схема нужна для распределения ходов по приоритетам
