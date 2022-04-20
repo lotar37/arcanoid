@@ -34,7 +34,9 @@ class Player:
         self.mashtab = 60
         self.x = 0
         self.y = 0
-        print(canvas)
+        self.health = 100
+
+        # print(canvas)
         self.avatar = canvas.create_oval(self.x, self.y, \
             self.x + 2*self.radius, self.y + 2*self.radius, fill=self.color)
 
@@ -56,30 +58,40 @@ class Player:
         print("position:",pos,step)
         print('to', self.x, self.y)
         for i in range(discret):
-            x, y = pos[0] + step[0] * (i+1),  pos[1] + step[1] * (i+1)
+            x, y = pos[0] + step[0] * (i+1) + Game.mashtab// 2,  pos[1] + step[1] * (i+1) + Game.mashtab// 2
             canvas.coords(self.avatar, x - self.radius, y - self.radius, x + self.radius, y + self.radius)
-            # sleep(0.01)
+            sleep(0.01)
             root.update_idletasks()
             root.update()
 
     def shot(self):
-    def step(self):
-
         d = choice(direct)
         if d == "n":
-            if self.y == 0 or Game.playing_field[self.y-1][self.x] != "":
+            return 0, -1
+        if d == "o":
+            return 1, 0
+        if d == "s":
+            return 0, 1
+        if d == "w":
+            return -1, 0
+
+    def step(self):
+        d = choice(direct)
+        print(self.id, d)
+        if d == "n":
+            if self.y == 0 or Game.playing_field[self.y-1][self.x] == "tree":
                 return self.step()
             return 0, -1
         if d == "o":
-            if self.x == Game.x - 1  or Game.playing_field[self.y][self.x + 1] != "":
+            if self.x == Game.x - 1  or Game.playing_field[self.y][self.x + 1] == "tree":
                 return self.step()
             return 1, 0
         if d == "s":
-            if self.y == Game.y -1 or Game.playing_field[self.y + 1][self.x] != "":
+            if self.y == Game.y -1 or Game.playing_field[self.y + 1][self.x] == "tree":
                 return self.step()
             return 0, 1
         if d == "w":
-            if self.x == 0 or Game.playing_field[self.y][self.x-1] != "":
+            if self.x == 0 or Game.playing_field[self.y][self.x-1] == "tree":
                 return self.step()
             return -1, 0
 
@@ -90,13 +102,32 @@ class Player:
         Game.playing_field[self.y][self.x] = str(self.id)
         self.move_avatar()
 
+class Bullet:
+    def __init__(self, direct, x, y):
+        self.power = 100
+        self.direct = direct
+        self.x = x
+        self.y = y
+        self.radius = 3
+        self.avatar = canvas.create_oval(self.x - self.radius, self.y - self.radius, \
+            self.x + self.radius, self.y + self.radius, fill=self.color)
+
+    def move_avatar(self):
+        self.x += self.direct[0]
+        self.y += self.direct[1]
+        if self.x < 0 or self.x == Game.x or self.y < 0 or self.y == Game.y:
+            self.power = 0
+        canvas.coords(self.avatar, self.x * Game.mashtab - self.radius, self.y* Game.mashtab - self.radius,\
+                      self.x* Game.mashtab + self.radius, self.y* Game.mashtab + self.radius)
+
 
 class Game:
     global move_types, root, canvas
-    x = 15
-    y = 15
-    trees = 25
+    x = 17
+    y = 17
+    trees = 35
     playing_fild = []
+    bullets = []
     mashtab = 40
 
     def __init__(self, n):
@@ -127,16 +158,25 @@ class Game:
                     self.players[i].set_avatar()
                     break
 
+    # удаление дохлых пуль
+    def check_bullets(self):
+        # перебрать в обратном порядке, чтобы при удалении не было
+        # ошибок индекса списка
+        for i in range(len(Game.bullets)-1,-1,-1):
+            if Game.bullets[i].power == 0:
+                Game.bullets.pop(i)
+
     def set_tree(self, x, y):
         delta = Game.mashtab // 2
         canvas.create_oval(x* Game.mashtab - delta, y* Game.mashtab - delta, x* Game.mashtab + delta,\
                            y* Game.mashtab + delta, fill="green")
+
     def set_tree_img(self, x, y):
         minc = Image.open("../../images/tree.gif")
         mincol = ImageTk.PhotoImage(minc)
         label3 = Label(canvas, image=mincol, border=0)
         label3.image = mincol
-        label3.place(x=x*Game.mashtab - 20, y=y*Game.mashtab - 20, )
+        label3.place(x=x*Game.mashtab - 20 + Game.mashtab//2, y=y*Game.mashtab - 20 + Game.mashtab//2)
 
 
     def players_move(self):
@@ -148,7 +188,7 @@ class Game:
     def player_step(self,move):
         self.players[move["id"]].step_exe(move)
 
-    def player_shot(self):
+    def player_shot(self, move):
         pass
 
     def game_calculate(self, moves):
@@ -175,6 +215,6 @@ class Game:
             # sleep(1)
 
 
-g = Game(30)
+g = Game(25)
 print(g.playing_field)
 g.play()
