@@ -23,7 +23,7 @@ canvas.pack()
 
 
 class Player:
-    global move_types, ball_available_colors, canvas
+    global move_types, ball_available_colors, canvas, direct
 
     def __init__(self,id):
         self.id = id
@@ -41,7 +41,9 @@ class Player:
     def move(self):
         type = choice(move_types)
         if type == "step":
-            return {"id":self.id, "type":"step","data":self.step()}
+            return {"id":self.id, "type":type,"data":self.step()}
+        elif type == "shot":
+            return {"id":self.id, "type":type,"data":self.shot()}
 
     def set_avatar(self):
         canvas.coords(self.avatar, self.x * Game.mashtab - self.radius, self.y * Game.mashtab - self.radius, \
@@ -60,9 +62,9 @@ class Player:
             root.update_idletasks()
             root.update()
 
-
+    def shot(self):
     def step(self):
-        global direct
+
         d = choice(direct)
         if d == "n":
             if self.y == 0 or Game.playing_field[self.y-1][self.x] != "":
