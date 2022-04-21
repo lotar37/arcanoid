@@ -76,7 +76,7 @@ class Player:
             canvas.coords(self.avatar, x - self.radius, y - self.radius, x + self.radius, y + self.radius)
             canvas.coords(self.health_ava, x + self.radius + 1, y - self.radius + dec, x + self.radius + 4, y + self.radius)
             canvas.itemconfig(self.health_ava, fill=color, outline=color)
-            # sleep(0.01)
+            sleep(0.01)
             root.update_idletasks()
             root.update()
 
@@ -223,7 +223,7 @@ class Game:
                            y* Game.mashtab + delta, fill="green")
 
     def set_tree_img(self, x, y):
-        a_trees = ["../../images/tree.gif","../../images/tree3.gif","../../images/tree2.gif"]
+        a_trees = ["../../images/tree5.gif","../../images/tree4.gif","../../images/tree6.gif","../../images/tree3.gif","../../images/tree2.gif"]
         minc = Image.open(choice(a_trees))
         mincol = ImageTk.PhotoImage(minc)
         label3 = Label(canvas, image=mincol, border=0)
