@@ -14,14 +14,10 @@ ball_available_colors = ["green", "blue", "red", "yellow", "magenta",
                          "cyan", "pink", "orange", "gray", "lightgray", "darkred", "lightgreen", "darkorange",
                          ]
 
-max_x = 800
-max_y = 800
 
 
-root = Tk()
-canvas = Canvas(root, width=max_x, height=max_y, bg="black")
-canvas.pack()
-
+# canvas.pack()
+canvas = ""
 
 class Player:
     global move_types, ball_available_colors, canvas, direct
@@ -36,6 +32,7 @@ class Player:
         self.x = 0
         self.y = 0
         self.health = 100
+        self.points = 0
 
         # print(canvas)
         x,y,r = self.x,self.y,self.radius
@@ -119,7 +116,8 @@ class Player:
         self.move_avatar()
 
 class Bullet:
-    def __init__(self, direct, x, y, color):
+    def __init__(self, direct, x, y, color, id):
+        self.player_id = id
         self.power = 100
         self.direct = direct
         self.x = x
@@ -153,13 +151,17 @@ class Bullet:
                 self.power = 0
                 print("пуля попала в дерево")
             elif Game.playing_field[self.y][self.x] != "":
-                print("player", int(Game.playing_field[self.y][self.x]))
                 player = Game.players[int(Game.playing_field[self.y][self.x])]
-                print("до", player.health)
-                player.health -= int(randint(50,100)/100 * self.power)
-                print("после",player.health)
-                self.power = 0
-                print("игрок поймал маслину. Его здоровье", player.health)
+                if player.id != self.player_id:
+                    # нанесенный урон
+                    damage = int(randint(50,100)/100 * self.power)
+                    player.health -= damage
+                    # начислить стрелявшему очки в размере ущерба
+                    Game.players[self.player_id].points += damage
+                    self.power = 0
+                    print("игрок поймал маслину. Его здоровье", player.health)
+                else:
+                    print(self.id, "игрок стрелял сам в себя")
             else:
                 self.power = int(0.75 * self.power)
         except:
@@ -177,12 +179,30 @@ class Game:
     bullets = []
     mashtab = 40
 
+
     def __init__(self, n):
+        global move_types, root, canvas
+        max_x = 800
+        max_y = 800
+        self.tour = 0
         self.game_on = True
+        self.alive = n
+        self.proc = {"step":self.player_step, "shot":self.player_shot}
+        root = Tk()
+        self.lab = Label(canvas, bg='yellow', fg="black", text="в игре "+str(n))
+        self.lab.grid(row=0, column=0)
+        self.best = []
+        self.best_control = n*2//3
+        opts = {'ipadx': 5, 'ipady': 5, 'sticky': 'nswe'}
+        for i in range(self.best_control):
+            self.best.append(Label(canvas, bg='yellow', fg="black", text=" лучший из "+str(n)))
+            self.best[len(self.best)-1].grid(row=i+1, column=1,**opts)
+        canvas = Canvas(root, width=max_x, height=max_y, bg="black")
+        canvas.grid(row=1, column=0,rowspan=self.best_control)
+
         Game.players = [Player(i) for i in range(n)]
         Game.playing_field = [["" for i in range(Game.y)] for j in range(Game.x)]
         self.arrangement()
-        self.proc = {"step":self.player_step, "shot":self.player_shot}
 
     def move(self):
         pass
@@ -230,12 +250,17 @@ class Game:
         label3.image = mincol
         label3.place(x=x*Game.mashtab - 20 + Game.mashtab//2, y=y*Game.mashtab - 20 + Game.mashtab//2)
 
+    def change_score(self):
+        self.lab["text"] = "в игре:" + str(self.alive)
+
     def check_player_health(self):
         for i in range(len(Game.players)):
-            if Game.players[i].health <= 0:
+            if Game.players[i].health <= 0 and Game.players[i].status != "die":
                 Game.players[i].status = "die"
                 canvas.delete(Game.players[i].avatar)
                 canvas.delete(Game.players[i].health_ava)
+                self.alive -= 1
+                # self.change_score()
 
 
 
@@ -255,11 +280,30 @@ class Game:
         Game.bullets.append(Bullet(move["data"],\
                     Game.players[move["id"]].x,\
                     Game.players[move["id"]].y,\
-                    Game.players[move["id"]].color))
+                    Game.players[move["id"]].color, move["id"]))
 
     def move_bullets(self):
         for bullet in Game.bullets:
             bullet.move()
+
+    def best_players(self, n):
+        points = []
+        for player in Game.players:
+            points.append(player.points)
+
+        best = []
+        for i in range(n):
+            maximum = max(points)
+            best.append([points.index(maximum), maximum, Game.players[points.index(maximum)].status, Game.players[points.index(maximum)].color])
+            points[points.index(maximum)] = 0
+
+        for i in range(len(best)):
+            self.best[i]["text"] = "игрок {0} набрал {1}({2}) ".format(best[i][0], best[i][1], best[i][2])
+            self.best[i]["bg"] = best[i][3]
+
+
+
+
 
     def game_calculate(self, moves):
         print(*[bul.power for bul in Game.bullets])
@@ -276,18 +320,33 @@ class Game:
                 # Проверка попаданий и на отсутствие энергии
                 self.check_bullets()
 
+    def take_winner(self):
+        for p in Game.players:
+            if p.status != "die":
+                return p
+
     def play(self):
-        i = 0
         while self.game_on:
-            i += 1
-            if i > 11150:
+            self.tour += 1
+            if self.tour > 11150:
                 break
+            print(self.tour)
+            self.lab["text"] = "В игре {0}, тур {1}.".format(self.alive, self.tour)
+
             moves = self.players_move()
-            print(moves)
+            # print(moves)
             self.game_calculate(moves)
-            print(Game.playing_field)
+            # print(Game.playing_field)
+            self.best_players(self.best_control)
             root.update_idletasks()
             root.update()
+            if self.alive <= 1:
+                self.game_on = False
+        winner = self.take_winner()
+
+        self.lab["text"] = "Игра закончена. Cыграно {2} туров. Победил игрок№{0}, набравший {1} очков. Здоровье {3}."\
+            .format(winner.id, winner.points, self.tour, winner.health)
+        root.mainloop()
             # sleep(1)
 
 
