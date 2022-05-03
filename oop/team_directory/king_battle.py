@@ -73,7 +73,7 @@ class Player:
             canvas.coords(self.avatar, x - self.radius, y - self.radius, x + self.radius, y + self.radius)
             canvas.coords(self.health_ava, x + self.radius + 1, y - self.radius + dec, x + self.radius + 4, y + self.radius)
             canvas.itemconfig(self.health_ava, fill=color, outline=color)
-            sleep(0.01)
+            # sleep(0.01)
             root.update_idletasks()
             root.update()
 
@@ -169,7 +169,7 @@ class Bullet:
 
 
 
-class Game:
+class Game(Frame):
     global move_types, root, canvas
     x = 17
     y = 17
@@ -182,13 +182,14 @@ class Game:
 
     def __init__(self, n):
         global move_types, root, canvas
+        root = Tk()
+        super().__init__()
         max_x = 800
         max_y = 800
         self.tour = 0
         self.game_on = True
         self.alive = n
         self.proc = {"step":self.player_step, "shot":self.player_shot}
-        root = Tk()
         self.lab = Label(canvas, bg='yellow', fg="black", text="в игре "+str(n))
         self.lab.grid(row=0, column=0)
         self.best = []
@@ -321,16 +322,19 @@ class Game:
                 self.check_bullets()
 
     def take_winner(self):
-        for p in Game.players:
-            if p.status != "die":
-                return p
+        maximum = 0
+        for player in Game.players:
+            if player.status == "alive" and player.points > maximum:
+                winner = player
+                maximum = player.points
+        return winner
 
     def play(self):
         while self.game_on:
             self.tour += 1
-            if self.tour > 11150:
+            if self.tour >= 500:
                 break
-            print(self.tour)
+            print("============ TOUR {} ================".format(self.tour))
             self.lab["text"] = "В игре {0}, тур {1}.".format(self.alive, self.tour)
 
             moves = self.players_move()
@@ -343,13 +347,17 @@ class Game:
             if self.alive <= 1:
                 self.game_on = False
         winner = self.take_winner()
-
+        print("Игра закончена. Cыграно {2} туров. Победил игрок№{0}, набравший {1} очков. Здоровье {3}."\
+            .format(winner.id, winner.points, self.tour, winner.health))
         self.lab["text"] = "Игра закончена. Cыграно {2} туров. Победил игрок№{0}, набравший {1} очков. Здоровье {3}."\
             .format(winner.id, winner.points, self.tour, winner.health)
+        sleep(5)
         root.mainloop()
             # sleep(1)
 
 
-g = Game(25)
+g = Game(30)
 print(g.playing_field)
+
 g.play()
+
