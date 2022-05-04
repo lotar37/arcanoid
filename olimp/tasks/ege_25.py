@@ -7,16 +7,19 @@
 # не меньше трёх элементов, не превышающих 115.
 # В ответе перечислите найденные числа в порядке возрастания.
 
+# 2053440
+# 2098080
+# 2328480
+# 2638944
+
 import math
-result  = []
 
 for i in range(2000001,3000000):
-    cont = False
     arr = []
     count = 0
     for j in range(3,int(math.sqrt(i))+1):
         if i % j == 0:
-            if abs(i//j - j) < 116:
+            if abs(i//j - j) <= 115:
                 count += 1
             if count > 2:
                 print(i)
