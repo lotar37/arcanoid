@@ -4,6 +4,7 @@ from tkinter import *
 class Calc:
     def __init__(self, master):
         self.master = master
+        self.lab   = Label(master, width=20, bg='black', fg='white')
         self.ent1  = Entry(master, width=20)
         self.ent2  = Entry(master, width=20)
         self.sin  = Button(master, text="sin")
@@ -24,7 +25,6 @@ class Calc:
         self.mult  = Button(master, text="*")
         self.dev   = Button(master, text="/")
         self.per   = Button(master, text="%")
-        self.lab   = Label(master, width=20, bg='black', fg='white')
 
         self.plus['command'] = self.fun_plus
         self.minus['command'] = self.fun_minus

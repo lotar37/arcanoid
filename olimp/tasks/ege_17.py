@@ -23,20 +23,24 @@ count34 = 0
 
 f = open("17.txt")
 a = [int(i) for i in f]
+s = 0
+for i in a:
+    if i % 6 == 0:
+        s += i
 
-
-maximum = 0
-c = 0
-
-for i in range(len(a)-1):
-    for j in range(i+1,len(a)):
-        if (a[i]+a[j]) % 9 == 0:
-            c += 1
-            maximum = max(a[i]+a[j],maximum)
-print(c, maximum)
-
-
-
+print(s)
+# maximum = 0
+# c = 0
+#
+# for i in range(len(a)-1):
+#     for j in range(i+1,len(a)):
+#         if (a[i]+a[j]) % 9 == 0:
+#             c += 1
+#             maximum = max(a[i]+a[j],maximum)
+# print(c, maximum)
+#
+#
+#
 
 
 
