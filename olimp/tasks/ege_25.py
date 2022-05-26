@@ -12,19 +12,27 @@
 # 2328480
 # 2638944
 
+
+
+
+
+
+
+
+
+
+
 import math
 
-for i in range(2000001,3000000):
-    arr = []
+for i in range(2000000,3000001):
     count = 0
-    for j in range(3,int(math.sqrt(i))+1):
+    for j in range(int(math.sqrt(i))-117 ,int(math.sqrt(i))+1):
         if i % j == 0:
             if abs(i//j - j) <= 115:
                 count += 1
             if count > 2:
                 print(i)
                 break
-
 
 
 
