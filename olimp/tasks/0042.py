@@ -8,10 +8,11 @@
 # значение силы этого логова драконов? Именно эту задачу Вам и предстоит решить.
 
 from math import sqrt
-n  = int(input())
+
+n = int(input())
 n = 6
 
 i = int(sqrt(n))
 
 m = n // i
-print(i ** (m - 1)  * (n - (m - 1) * i))
+print(i ** (m - 1) * (n - (m - 1) * i))
