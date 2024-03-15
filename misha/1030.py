@@ -21,4 +21,16 @@
 #                 print(x,y,z)
 #
 #
-print(sum([i for i in range(12)]))
+# print(sum([i for i in range(12)]))
+
+
+
+
+n = int(input())
+
+if n%2:
+    print(n**3)
+else:
+    print(n**2)
+
+
