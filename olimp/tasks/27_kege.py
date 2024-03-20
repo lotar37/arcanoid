@@ -17,10 +17,10 @@ def findDoubleMin(a):
     return i1
 
 def findMin(a):
-    aa = [abs(a[i+1]-a[i]) for i in range(len(a)-1)]
-    i = aa.index(min(aa))
-    if i != 0:
-        if a[i-1] < a[i + 1]:
+    # aa = [abs(a[i+1]-a[i]) for i in range(len(a)-1)]
+    i = a.index(min(a))
+    if i != 0 and i != len(a)-1:
+        if abs(a[i] - a[i-1]) < abs(a[i] - a[i + 1]) :
             i -= 1
     return i
 
@@ -45,15 +45,18 @@ while True:
             su_prev += abs(a[ii][0] - a[j][0]) * a[j][1]
         aa.append(su_prev)
     if step == 1:
+        print(aa)
         print(min(aa))
         break
     print(step, aa)
-    b, b2 = findDoubleMin(aa), findMin(aa)
-    print(b,b2)
+    b2 =findMin(aa)
+    print(b2)
     begin += b2 * step
 
     print(begin)
+
     step = step // 10
+
 
 
 
