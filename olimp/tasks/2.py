@@ -9,15 +9,15 @@
 #
 #                 if not(y => (x eq w)) and (z => x) == 1:
 #                     print(x,y,z,w)
-time = input('введите время суток')
-if time == "утро":
-    print("Сейчас утреннее время")
-elif time == 'день':
-    print('Наступил день')
-elif time == 'вечер':
-    print('Наступил вечер')
-else:
-    print('Ночь. Пора спать.')
+# time = input('введите время суток')
+# if time == "утро":
+#     print("Сейчас утреннее время")
+# elif time == 'день':
+#     print('Наступил день')
+# elif time == 'вечер':
+#     print('Наступил вечер')
+# else:
+#     print('Ночь. Пора спать.')
 
 # ¬ (y → (x ≡ w)) ∧ (z → x )
 
@@ -29,6 +29,12 @@ for x in range(2):
         for z in range(2):
             for w in range(2):
                 # ¬((x ∨ y) → (z ∧ w)) ∧ (x → w)
-                if not(not(x or y) or (z and w)) and (not(x) or w):
+                if not((x == y) or (z and not w) or (not(z) and y)):
                 # if not(y => (x eq w)) and (z => x) == 1:
                     print(x,y,z,w)
+
+#
+#     0	  0		0	0
+#         0		0	0
+#               0	0
+#  

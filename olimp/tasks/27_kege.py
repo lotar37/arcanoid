@@ -27,7 +27,7 @@ def findMin(a):
 
 
 
-f = open("./data/27_B.txt")
+f = open("./data/27_A.txt")
 nukm = f.readline()
 a = [[int(i) for i in s.split()] for s in f]
 a = [[aa[0],ceil(aa[1]/36)] for aa in a]
@@ -38,6 +38,7 @@ step = len(a)//10
 
 while True:
     aa = []
+    
     for i in range(10):
         su_prev = 0
         ii = begin + i * step
