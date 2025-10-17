@@ -1,23 +1,25 @@
-# (w→y) ∧ (¬y ≡ x) ∧ (x ∨ z)
+def foo(n,k):
+    smb = "0123456789ABCDEF"
+    s = ""
+    while n>0:
+        s += smb[n%k]
+        n //= k
 
-#
-# print("x y z w")
-# for x in range(2):
-#     for y in range(2):
-#         for z in range(2):
-#             for w in range(2):
-#                 if (w<=y) and (not y == x) and (x or z):
-#                     print(x,y,z,w)
+    return s[::-1]
 
-from copy import deepcopy
-a = [1,2,3, [1,2,3]]
 
-a1 = a
-b = deepcopy(a)
-print(id(a), id(a1), id(b))
-if id(a) == id(a1):
-    print('equal objects')
+while True:
+    print("\n введите N и M:", end=" ")
+    N,M = [int(i) for i in input().split()]    
+    print(f"\n--------------N-{N}--------------")
+    for i in 2,4,8,16:
+        print(str(i)+"x"+foo(N, i),end="  ")
 
-a[3][2] = 555
+    #print("Бх4 + Мх4:"+
+    print(f"\n--------------M-{M}--------------")
+    for i in 2,4,8:
+        print(str(i)+"x"+foo(M, i),end="  ")
 
-print(a, a1, b)
+    print("\n------sum-4------dif-8--------------")
+
+    print("----",foo(N+M,4)," --- ",foo(N-M,8))
