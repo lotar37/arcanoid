@@ -8,14 +8,6 @@ def foo(n,k):
     return s[::-1]
 
 
-def alhebrInSystem(a,b,system=2,action="+"):
-    
-    if action == "+":
-        n = a + b
-    elif action == "-":
-        n = abs(a - b)
-    return True
-
 while True:
     print("\n введите N и M:", end=" ")
     N,M = [int(i) for i in input().split()]    
@@ -25,7 +17,7 @@ while True:
 
     #print("Бх4 + Мх4:"+
     print(f"\n--------------M-{M}--------------")
-    for i in 4,8:
+    for i in 2,4,8:
         print(str(i)+"x"+foo(M, i),end="  ")
 
     print("\n------sum-4------dif-8--------------")
