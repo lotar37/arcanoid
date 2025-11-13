@@ -10,18 +10,24 @@
 #
 # Сколько существует программ, которые преобразуют исходное число 1 в число 16
 # и при этом никакая команда не повторяется более двух раз подряд?
+import datetime
+n = 196000
 
 def foo(k, comand=""):
-    if k > 16 or comand[-3:] == "111" or comand[-3:] == "222":
+    if k > n or comand[-3:] == "111" or comand[-3:] == "222":
         return 0
-    elif k == 16:
+    elif k == n:
         return 1
     else:
         return foo(k + 1, comand + "1") + foo(k * 2, comand + "2")
 
+start = datetime.datetime.now()
 
 print(foo(1))
-n = 16
+print(f'Время работы рекурсия:  + {datetime.datetime.now() - start}')
+start = datetime.datetime.now()
+
+
 add = [[0] * 3 for _ in range(n * 3 + 1)]
 mul = [[0] * 3 for _ in range(n * 3 + 1)]
 add[2][1] = 1
@@ -39,4 +45,5 @@ for i in range(2, n):
     if mul[i][2]:
         add[i + 1][1] += mul[i][2]
 
-print(sum(add[16]) + sum(mul[16]))
+print(sum(add[n]) + sum(mul[n]))
+print(f'Время работы динамика:  + {datetime.datetime.now() - start}')
