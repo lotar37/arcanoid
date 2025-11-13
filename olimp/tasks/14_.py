@@ -1,12 +1,15 @@
-A = []
-print(A)
-for x in "012345678":
-    for y in "012345678":
-        s1 =  "88" + x + "4"+ y
-        s2 = "7" + x + "44" + y
-        n = int(s1,9) + int(s2,11)
-        if n % 3 == 0:
+s = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-            A.append(n//3)
-            print(A)
-print(min(A))
+def convert(st,d):
+    n = 0
+    st = st[::-1]
+    for i in range(len(st)):
+        n += s.find(st[i])*d**i
+    return n
+print(convert("11111110",2))
+
+
+for i in range(32,3009):
+    if convert("KOT",i) + convert("GOLODNI",i) == convert("MEEOW",i)*convert("100",i) -20194023088:
+        print(convert("PURR",i))
+        break
