@@ -11,7 +11,7 @@
 # Сколько существует программ, которые преобразуют исходное число 1 в число 16
 # и при этом никакая команда не повторяется более двух раз подряд?
 import datetime
-n = 196000
+n = 596000
 
 def foo(k, comand=""):
     if k > n or comand[-3:] == "111" or comand[-3:] == "222":
@@ -24,7 +24,8 @@ def foo(k, comand=""):
 start = datetime.datetime.now()
 
 print(foo(1))
-print(f'Время работы рекурсия:  + {datetime.datetime.now() - start}')
+t1 = datetime.datetime.now().timestamp() - start.timestamp()
+print(f'Время работы (рекурсия):{t1}c.')
 start = datetime.datetime.now()
 
 
@@ -46,4 +47,7 @@ for i in range(2, n):
         add[i + 1][1] += mul[i][2]
 
 print(sum(add[n]) + sum(mul[n]))
-print(f'Время работы динамика:  + {datetime.datetime.now() - start}')
+t2 = datetime.datetime.now().timestamp() - start.timestamp()
+print(f'Время работы (динамика):  + {t2}c.')
+
+print(f"Динамическое работает быстрее примерно в {round(int(t1*10000)/int(t2*10000))} раз")
