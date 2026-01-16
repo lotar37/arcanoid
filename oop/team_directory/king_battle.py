@@ -186,6 +186,9 @@ class Game(Frame):
         super().__init__()
         max_x = 800
         max_y = 800
+        self.best_control = n * 2 // 3
+        canvas = Canvas(root, width=max_x, height=max_y, bg="black")
+        canvas.grid(row=1, column=0,rowspan=self.best_control)
         self.tour = 0
         self.game_on = True
         self.alive = n
@@ -193,13 +196,10 @@ class Game(Frame):
         self.lab = Label(canvas, bg='yellow', fg="black", text="в игре "+str(n))
         self.lab.grid(row=0, column=0)
         self.best = []
-        self.best_control = n*2//3
         opts = {'ipadx': 5, 'ipady': 5, 'sticky': 'nswe'}
         for i in range(self.best_control):
             self.best.append(Label(canvas, bg='yellow', fg="black", text=" лучший из "+str(n)))
             self.best[len(self.best)-1].grid(row=i+1, column=1,**opts)
-        canvas = Canvas(root, width=max_x, height=max_y, bg="black")
-        canvas.grid(row=1, column=0,rowspan=self.best_control)
 
         Game.players = [Player(i) for i in range(n)]
         Game.playing_field = [["" for i in range(Game.y)] for j in range(Game.x)]
@@ -330,6 +330,7 @@ class Game(Frame):
         return winner
 
     def play(self):
+
         while self.game_on:
             self.tour += 1
             if self.tour >= 500:
