@@ -1,0 +1,53 @@
+# Исполнитель преобразует число на экране.
+# У исполнителя есть две команды, которым присвоены номера.
+# 1.Прибавить 1.
+# 2.Умножить на 2.
+#
+# Первая команда увеличивает число на экране на 1, вторая умножает его на 2.
+# Программа для исполнителя это последовательность команд. Например, если в
+# начальный момент на экране находится число 1, то программа 212 последовательно
+# преобразует его в 2, 3, 6.
+#
+# Сколько существует программ, которые преобразуют исходное число 1 в число 16
+# и при этом никакая команда не повторяется более двух раз подряд?
+import datetime
+n = 596000
+
+def foo(k, comand=""):
+    if k > n or comand[-3:] == "111" or comand[-3:] == "222":
+        return 0
+    elif k == n:
+        return 1
+    else:
+        return foo(k + 1, comand + "1") + foo(k * 2, comand + "2")
+
+start = datetime.datetime.now()
+
+print(foo(1))
+t1 = datetime.datetime.now().timestamp() - start.timestamp()
+print(f'Время работы (рекурсия):{t1}c.')
+start = datetime.datetime.now()
+
+
+add = [[0] * 3 for _ in range(n * 3 + 1)]
+mul = [[0] * 3 for _ in range(n * 3 + 1)]
+add[2][1] = 1
+mul[2][1] = 1
+
+for i in range(2, n):
+    if add[i][1]:
+        add[i + 1][2] += add[i][1]
+        mul[i * 2][1] += add[i][1]
+    if add[i][2]:
+        mul[i * 2][1] += add[i][2]
+    if mul[i][1]:
+        mul[i * 2][2] += mul[i][1]
+        add[i + 1][1] += mul[i][1]
+    if mul[i][2]:
+        add[i + 1][1] += mul[i][2]
+
+print(sum(add[n]) + sum(mul[n]))
+t2 = datetime.datetime.now().timestamp() - start.timestamp()
+print(f'Время работы (динамика):  + {t2}c.')
+
+print(f"Динамическое работает быстрее примерно в {round(int(t1*10000)/int(t2*10000))} раз")
