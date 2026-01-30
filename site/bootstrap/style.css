@@ -1,0 +1,6 @@
+.my{
+    border:1px solid red;
+}
+.my.my{
+    border:3px solid green;
+}
