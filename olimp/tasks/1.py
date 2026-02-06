@@ -49,57 +49,71 @@
 # print(S[1:6], end="***")
 # print(S[5::2], end="***")
 # print(S[9:3:-1], end="***")
-n = 1350051
-a = []
+# n = 1350051
+# a = []
+#
+# for x in range(1350051,n+100):
+#     if len(a) == 5:
+#         break
+#     m = int(x*0.5)+1
+#     l = m //100
+#     if m % 100 < 11:
+#         l -= 1
+#     print(m,l)
+#     for i in range(1,l):
+#         # print(i*100 + 11)
+#         if x % (i*100 + 11) == 0:
+#             a.append([x,i*100 + 11])
+#             break
+# print(a)
+#
+# def simple_numbers(n):
+#     a = [2]
+#     for i in range(3,n+1):
+#         for j in range(2,int(i**0.5)+1):
+#             if i%j == 0:
+#                 break
+#         else:
+#             a.append(i)
+#     return a
+# n = 1475000
+# a_simple = simple_numbers(n//2)
+# print(a_simple)
+# result = []
+# for i in range(n-1,n-1000,-1):
+#     a = [0]
+#     for j in a_simple:
+#         if i % j == 0:
+#             a += [j]
+#     sm = sum(a)
+#     if (0<sm<42000) and sm % 6 == 0:
+#         result.append([i,sm])
+#     if len(result) == 5:
+#         break
+# print(result)
+#
+#
+#
+#
+#
+#
+#
+# Дан список: a =  [10, 22, 9, 33, 21, 50, 41, 60, 80, 104,7]
+# найти
+# -количество нечетных чисел
+# -сумму делящихся на три
+# -среднее арифметическое двузначных
+#
+# from random import randint
+# a = " ".join([f"{randint(4,120)}" for i in range(10)])
+# print(f"s='{a}'")
+s = input("введите строку чисел: ")
 
-for x in range(1350051,n+100):
-    if len(a) == 5:
-        break
-    m = int(x*0.5)+1
-    l = m //100
-    if m % 100 < 11:
-        l -= 1
-    print(m,l)
-    for i in range(1,l):
-        # print(i*100 + 11)
-        if x % (i*100 + 11) == 0:
-            a.append([x,i*100 + 11])
-            break
-print(a)
+sm = 0
+a = [int(st) for st in s.split()]
+for n in a:
+    print("текущий n:",n)
+    input()
+    sm += n
 
-def simple_numbers(n):
-    a = [2]
-    for i in range(3,n+1):
-        for j in range(2,int(i**0.5)+1):
-            if i%j == 0:
-                break
-        else:
-            a.append(i)
-    return a
-n = 1475000
-a_simple = simple_numbers(n//2)
-print(a_simple)
-result = []
-for i in range(n-1,n-1000,-1):
-    a = [0]
-    for j in a_simple:
-        if i % j == 0:
-            a += [j]
-    sm = sum(a)
-    if (0<sm<42000) and sm % 6 == 0:
-        result.append([i,sm])
-    if len(result) == 5:
-        break
-print(result)
-
-
-
-
-
-
-
-Дан список: a =  [10, 22, 9, 33, 21, 50, 41, 60, 80, 104,7]
-найти
--количество нечетных чисел
--сумму делящихся на три
--среднее арифметическое двузначных
+print(sm)
